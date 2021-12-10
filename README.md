@@ -1,6 +1,6 @@
-# dk_brothers
+# Sales Rep and Sales Management app
 
-A new Flutter project.
+# This mobile app is used to manage daily activities of a wholesale bussiness
 
 ## Getting Started
 
