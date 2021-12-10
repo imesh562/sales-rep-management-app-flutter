@@ -1,6 +1,6 @@
 # Sales Rep and Sales Management app
 
-# This mobile app is used to manage daily activities of a wholesale bussiness
+## This mobile app is used to manage daily activities of a wholesale bussiness
 
 ## Getting Started
 
