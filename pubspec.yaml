@@ -1,0 +1,86 @@
+name: dk_brothers
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  device_preview: ^0.7.4
+  font_awesome_flutter: ^9.1.0
+  firebase_core: ^1.6.0
+  firebase_auth: ^3.1.0
+  cloud_firestore: ^2.5.1
+  modal_progress_hud_alt: ^1.0.0
+  top_snackbar_flutter: ^1.0.0
+  persistent_bottom_nav_bar: ^4.0.2
+  rflutter_alert: ^2.0.4
+  internet_connection_checker: ^0.0.1+2
+  focused_menu: ^1.0.5
+  url_launcher: ^6.0.10
+  qr_flutter: ^4.0.0
+  screenshot: ^1.2.3
+  share_plus: ^2.1.4
+  path_provider: ^2.0.4
+  dropdown_plus: ^0.0.9
+  fluttertoast: ^8.0.8
+  bluetooth_print: ^3.0.1
+  location: ^4.3.0
+  blue_thermal_printer: ^1.1.8
+  flutter_calendar_carousel: ^2.0.3
+  flutter_barcode_scanner: ^2.0.0
+  fl_chart: ^0.40.2
+  sortedmap: ^0.5.1
+  carousel_slider: ^4.0.0
+  smooth_page_indicator: ^1.0.0+2
+  pull_to_refresh: ^2.0.0
+  firebase_storage: ^10.1.0
+  image_picker: ^0.8.4+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_native_splash: ^1.2.1
+
+flutter_native_splash:
+  color: "#5B9FDE"
+  image: assets/images/truck1.png
+  android: true
+  ios: true
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/logos/
+
+  fonts:
+    - family: Exo2
+      fonts:
+        - asset: assets/fonts/Exo2-VariableFont_wght.ttf
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

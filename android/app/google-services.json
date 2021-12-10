@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "242306850642",
+    "project_id": "dk-brothers",
+    "storage_bucket": "dk-brothers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242306850642:android:dee9671d211a5b749c248b",
+        "android_client_info": {
+          "package_name": "com.IJ_apps.dk_brothers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242306850642-7b1u96smntateok7a49rk7m2sa1k75uj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_gmODmv643pbYl1-Bv3J4nq6a079WS3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242306850642-7b1u96smntateok7a49rk7m2sa1k75uj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
