@@ -349,6 +349,7 @@ class _ShopRegisterState extends State<ShopRegister> {
         'tel_number': telephone,
         'rep_id': loggedInUser1!.uid,
         'timestamp': FieldValue.serverTimestamp(),
+        'last_visit': "null",
       });
       if (this.mounted)
         setState(() {

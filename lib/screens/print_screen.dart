@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:dk_brothers/components/components.dart';
 import 'package:dk_brothers/components/decorations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:location/location.dart';
@@ -71,7 +69,6 @@ class _PrintScreenState extends State<PrintScreen> {
   late StreamSubscription subscription;
   bool showSpinner = false;
 
-  BluetoothPrint checkDevice = BluetoothPrint.instance;
   BlueThermalPrinter printer = BlueThermalPrinter.instance;
   List<BluetoothDevice> devices = [];
   String? selectedDevice;
@@ -123,7 +120,7 @@ class _PrintScreenState extends State<PrintScreen> {
   }
 
   Future<bool?> checkBluetooth() async {
-    return await checkDevice.isOn;
+    return await printer.isOn;
   }
 
   Future<bool> checkGPS() async {

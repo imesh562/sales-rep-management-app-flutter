@@ -658,6 +658,9 @@ class _RepOverviewState extends State<RepOverview> {
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+
+    QuerySnapshot totalSnap = await _firestore.collection("order_items").get();
+
     if (querySnapshot.docs.length > 0) {
       for (int i = 0; i < querySnapshot.docs.length; i++) {
         var a = querySnapshot.docs[i];
@@ -667,15 +670,13 @@ class _RepOverviewState extends State<RepOverview> {
         var total = 0.0;
         var discountedTotal = 0.0;
         if (startDate == null && endDate == null) {
-          QuerySnapshot totalSnap = await _firestore
-              .collection("order_items")
-              .where('order_id', isEqualTo: a.reference.id)
-              .get();
           for (int i = 0; i < totalSnap.docs.length; i++) {
             var doc = totalSnap.docs[i];
-            total += doc['price'] * doc['quantity'];
-            discountedTotal += (doc['price'] * doc['quantity']) -
-                ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+            if (doc['order_id'] == a.reference.id) {
+              total += doc['price'] * doc['quantity'];
+              discountedTotal += (doc['price'] * doc['quantity']) -
+                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+            }
           }
           if (targetResults.containsKey(repID)) {
             if (discountedTotal < total && discountedTotal > 0) {
@@ -697,15 +698,14 @@ class _RepOverviewState extends State<RepOverview> {
         if (startDate != null && endDate != null && startBool && endBool) {
           if ((date.isBefore(endDate!) || date.isAtSameMomentAs(endDate!)) &&
               (date.isAfter(startDate!) || date.isAtSameMomentAs(startDate!))) {
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             if (targetResults.containsKey(repID)) {
               if (discountedTotal < total && discountedTotal > 0) {

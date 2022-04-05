@@ -15,34 +15,42 @@ class ItemProfilePieData {
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+    QuerySnapshot totalSnap = await _firestore
+        .collection("order_items")
+        .where('item_id', isEqualTo: itemID)
+        .get();
     if (querySnapshot.docs.length > 0) {
       for (int i = 0; i < querySnapshot.docs.length; i++) {
         var a = querySnapshot.docs[i];
         var repID = a['rep_id'];
-        QuerySnapshot totalSnap = await _firestore
-            .collection("order_items")
-            .where('order_id', isEqualTo: a.reference.id)
-            .where('item_id', isEqualTo: itemID)
-            .get();
+
         for (int i = 0; i < totalSnap.docs.length; i++) {
           var doc = totalSnap.docs[i];
-          var quantity = doc['quantity'];
-          if (shopItems.containsKey(repID)) {
-            shopItems.update(repID, (dynamic val) => val + quantity);
-          } else {
-            shopItems[repID] = quantity;
+          if (doc['order_id'] == a.reference.id) {
+            var quantity = doc['quantity'];
+            if (shopItems.containsKey(repID)) {
+              shopItems.update(repID, (dynamic val) => val + quantity);
+            } else {
+              shopItems[repID] = quantity;
+            }
           }
         }
       }
       var values = shopItems.values;
-      total = values.reduce((sum, element) => sum + element);
+      if (values.isNotEmpty) {
+        total = values.reduce((sum, element) => sum + element);
+      }
     }
   }
 
   getItemNames() async {
+    QuerySnapshot repData = await _firestore.collection("users").get();
+
     for (var key in shopItems.keys) {
-      await _firestore.collection("users").doc(key).get().then((result) {
-        itemNames.add(result.get('name'));
+      repData.docs.forEach((element) {
+        if (element.id == key) {
+          itemNames.add(element.get('name'));
+        }
       });
     }
   }
@@ -107,22 +115,24 @@ class ItemProfilePieData2 {
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+    QuerySnapshot totalSnap = await _firestore
+        .collection("order_items")
+        .where('item_id', isEqualTo: itemID)
+        .get();
     if (querySnapshot.docs.length > 0) {
       for (int i = 0; i < querySnapshot.docs.length; i++) {
         var a = querySnapshot.docs[i];
         var shopID = a['shop_id'];
         var total = 0.0;
         var discountedTotal = 0.0;
-        QuerySnapshot totalSnap = await _firestore
-            .collection("order_items")
-            .where('order_id', isEqualTo: a.reference.id)
-            .where('item_id', isEqualTo: itemID)
-            .get();
+
         for (int i = 0; i < totalSnap.docs.length; i++) {
           var doc = totalSnap.docs[i];
-          total += doc['price'] * doc['quantity'];
-          discountedTotal += (doc['price'] * doc['quantity']) -
-              ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+          if (doc['order_id'] == a.reference.id) {
+            total += doc['price'] * doc['quantity'];
+            discountedTotal += (doc['price'] * doc['quantity']) -
+                ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+          }
         }
         if (shopAnalysis.containsKey(shopID)) {
           if (discountedTotal < total && discountedTotal > 0) {
@@ -138,15 +148,22 @@ class ItemProfilePieData2 {
           }
         }
       }
+      shopAnalysis.removeWhere((key, value) => value == 0);
       var values = shopAnalysis.values;
-      total = values.reduce((sum, element) => sum + element);
+      if (shopAnalysis.isNotEmpty) {
+        total = values.reduce((sum, element) => sum + element);
+      }
     }
   }
 
   getItemNames() async {
+    QuerySnapshot repData = await _firestore.collection("shops").get();
+
     for (var key in shopAnalysis.keys) {
-      await _firestore.collection("shops").doc(key).get().then((result) {
-        shopNames.add(result.get('shop_name'));
+      repData.docs.forEach((element) {
+        if (element.id == key) {
+          shopNames.add(element.get('shop_name'));
+        }
       });
     }
   }

@@ -24,6 +24,7 @@ class ViewOrder extends StatefulWidget {
   var paymentMethod;
   var orderDate;
   var payment;
+  var payment_total;
   var shopId;
   var shopName;
   var time;
@@ -41,6 +42,7 @@ class ViewOrder extends StatefulWidget {
     this.orderDate,
     this.time,
     this.payment,
+    this.payment_total,
     this.paymentMethod,
     this.orderID,
     this.discount,
@@ -55,6 +57,7 @@ class ViewOrder extends StatefulWidget {
     this.orderDate,
     this.time,
     this.payment,
+    this.payment_total,
     this.paymentMethod,
     this.orderID,
     this.discount,
@@ -72,6 +75,7 @@ class ViewOrder extends StatefulWidget {
     this.orderDate,
     this.time,
     this.payment,
+    this.payment_total,
     this.paymentMethod,
     this.orderID,
     this.discount,
@@ -308,7 +312,7 @@ class _ViewOrderState extends State<ViewOrder> {
                               padding: EdgeInsets.only(
                                   bottom: mediaData.size.height * 0.015),
                               child: Text(
-                                ': Rs. ' + widget.payment,
+                                ': Rs. ' + widget.payment_total,
                                 style: TextStyle(
                                     fontFamily: 'Exo2',
                                     fontWeight: FontWeight.bold,
@@ -688,7 +692,7 @@ class _ViewOrderState extends State<ViewOrder> {
                                     orderList,
                                     widget.shopName,
                                     widget.orderID,
-                                    widget.payment,
+                                    widget.payment_total,
                                     widget.discount,
                                     widget.paymentMethod,
                                     widget.shopId,
@@ -713,7 +717,7 @@ class _ViewOrderState extends State<ViewOrder> {
                                     orderList,
                                     widget.shopName,
                                     widget.orderID,
-                                    widget.payment,
+                                    widget.payment_total,
                                     widget.discount,
                                     widget.paymentMethod,
                                     widget.shopId,
@@ -741,7 +745,7 @@ class _ViewOrderState extends State<ViewOrder> {
                                     orderList,
                                     widget.shopName,
                                     widget.orderID,
-                                    widget.payment,
+                                    widget.payment_total,
                                     widget.discount,
                                     widget.paymentMethod,
                                     widget.shopId,
@@ -918,7 +922,10 @@ class _ViewOrderState extends State<ViewOrder> {
 
   getBalance() {
     var finalT = getTotal();
-    finalT = double.parse(widget.payment) - double.parse(finalT);
+    finalT = double.parse(
+          widget.payment_total,
+        ) -
+        double.parse(finalT);
     return finalT;
   }
 

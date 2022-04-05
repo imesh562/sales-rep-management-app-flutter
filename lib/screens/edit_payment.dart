@@ -4,7 +4,6 @@ import 'package:dk_brothers/components/exception_manage.dart';
 import 'package:dk_brothers/screens/viewPayment.dart';
 import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -31,6 +30,8 @@ class EditPayment extends StatefulWidget {
   var showEdit;
   var userRoleDash;
   var repID;
+  var finalTotal;
+  var payment_total;
 
   EditPayment(
     this.showEdit,
@@ -43,6 +44,8 @@ class EditPayment extends StatefulWidget {
     this.paymentID,
     this.userRoleDash,
     this.repID,
+    this.finalTotal,
+    this.payment_total,
   );
   EditPayment.cheque(
     this.showEdit,
@@ -58,6 +61,8 @@ class EditPayment extends StatefulWidget {
     this.paymentID,
     this.userRoleDash,
     this.repID,
+    this.finalTotal,
+    this.payment_total,
   );
 
   @override
@@ -201,6 +206,9 @@ class _EditPaymentState extends State<EditPayment> {
                                   return 'Enter a valid value';
                                 } else if (double.parse(value) <= 0) {
                                   return 'Enter a valid value';
+                                } else if (widget.finalTotal <
+                                    double.parse(value)) {
+                                  return "Amount should not exceed the existing order total";
                                 } else {
                                   return null;
                                 }
@@ -596,6 +604,8 @@ class _EditPaymentState extends State<EditPayment> {
               'shop_id': selectedID,
               'shop_name': selectedName,
               'payment': amount,
+              'payment_total':
+                  widget.finalTotal > amount ? amount : widget.payment_total,
             });
           }
 

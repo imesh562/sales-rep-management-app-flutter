@@ -327,12 +327,13 @@ class _AnalysisState extends State<Analysis> {
         items = 0;
         users = 0;
       });
+    await getNumbers();
     await getData();
     if (this.mounted)
       setState(() {
         chartSpinner = false;
       });
-    await getNumbers();
+
     refreshCon.refreshCompleted();
   }
 
@@ -393,10 +394,14 @@ class _AnalysisState extends State<Analysis> {
     double d7 = 0;
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
+
     QuerySnapshot querySnapshot = await _firestore
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+
+    QuerySnapshot totalSnap = await _firestore.collection("order_items").get();
+
     if (querySnapshot.docs.length > 0) {
       if (chartType == 'Monthly') {
         for (int i = 0; i < querySnapshot.docs.length; i++) {
@@ -405,15 +410,14 @@ class _AnalysisState extends State<Analysis> {
               a['date'].toString().substring(0, 4)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             if (a['date'].toString().substring(5, 7) == '01') {
               if (discountedTotal < total && discountedTotal > 0) {
@@ -524,15 +528,14 @@ class _AnalysisState extends State<Analysis> {
               a['date'].toString().substring(0, 7)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
               total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             if (getWeekOfMonth(a['date']) == 1) {
               if (discountedTotal < total && discountedTotal > 0) {
@@ -587,15 +590,14 @@ class _AnalysisState extends State<Analysis> {
               a['date'].toString().substring(0, 7)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             int weekDay = date.weekday;
             DateTime startWeek = date.subtract(Duration(days: weekDay));

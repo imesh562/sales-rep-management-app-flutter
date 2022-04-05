@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dk_brothers/components/components.dart';
 import 'package:dk_brothers/components/decorations.dart';
@@ -45,8 +43,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   GlobalKey<FormState> _discountKey = GlobalKey();
 
   TextEditingController paymentController = TextEditingController();
-
-  BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
 
   late String shopName;
   late String telNum;
@@ -1297,7 +1293,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           'date': date.toString().substring(0, 10),
           'time': time.toString().substring(10, 19),
           'shop_name': selectedName,
-          'payment': amount,
+          'payment': total > amount ? amount : total,
+          'payment_total': amount,
           'payment_method': paymentMethod,
           'rep_name': repNameFull,
           'rep_id': loggedInUser1!.uid,
@@ -1317,7 +1314,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           'time': time.toString().substring(10, 19),
           'shop_name': selectedName,
           'discount': discount,
-          'payment': amount,
+          'payment': total > amount ? amount : total,
+          'payment_total': amount,
           'payment_method': paymentMethod,
           'payment_id': paymentId,
           'rep_name': repNameFull,
@@ -1338,7 +1336,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           'date': date.toString().substring(0, 10),
           'time': time.toString().substring(10, 19),
           'shop_name': selectedName,
-          'payment': amount,
+          'payment': total > amount ? amount : total,
+          'payment_total': amount,
           'payment_method': paymentMethod,
           'rep_name': repNameFull,
           'rep_id': loggedInUser1!.uid,
@@ -1362,7 +1361,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           'time': time.toString().substring(10, 19),
           'shop_name': selectedName,
           'discount': discount,
-          'payment': amount,
+          'payment': total > amount ? amount : total,
+          'payment_total': amount,
           'payment_method': paymentMethod,
           'payment_id': paymentId,
           'cheque_num': chequeNum,
@@ -1392,7 +1392,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           'time': time.toString().substring(10, 19),
           'shop_name': selectedName,
           'discount': discount,
-          'payment': amount,
+          'payment': total > amount ? amount : total,
+          'payment_total': amount,
           'payment_method': paymentMethod,
           'rep_name': repNameFull,
           'rep_id': loggedInUser1!.uid,
