@@ -28,6 +28,9 @@
 ### Sales Rep profile.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(1).png" width="250" height="500">
 
+### Business Analysis.
+<img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(8).png" width="250" height="500">
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
