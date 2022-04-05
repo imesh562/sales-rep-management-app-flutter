@@ -65,7 +65,7 @@ dev_dependencies:
   flutter_native_splash: ^1.2.1
 
 flutter_native_splash:
-  color: "#5B9FDE"
+  color: "#FFFFFF"
   image: assets/images/truck1.png
   android: true
   ios: true
