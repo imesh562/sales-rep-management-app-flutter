@@ -8,7 +8,7 @@
 
 ## Screenshots.
 
-![My Image](ss/Screenshot (2).png)
+![alt text](https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/Screenshot (2).png?raw=true)
 
 ## Getting Started
 
