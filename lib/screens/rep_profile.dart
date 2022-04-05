@@ -573,6 +573,8 @@ class _RepProfileState extends State<RepProfile> {
         .where('status', isEqualTo: 'enable')
         .where('rep_id', isEqualTo: widget.repID)
         .get();
+
+    QuerySnapshot totalSnap = await _firestore.collection("order_items").get();
     if (querySnapshot.docs.length > 0) {
       if (chartType == 'Monthly') {
         for (int i = 0; i < querySnapshot.docs.length; i++) {
@@ -581,15 +583,14 @@ class _RepProfileState extends State<RepProfile> {
               a['date'].toString().substring(0, 4)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             if (a['date'].toString().substring(5, 7) == '01') {
               if (discountedTotal < total && discountedTotal > 0) {
@@ -700,15 +701,14 @@ class _RepProfileState extends State<RepProfile> {
               a['date'].toString().substring(0, 7)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             if (getWeekOfMonth(a['date']) == 1) {
               if (discountedTotal < total && discountedTotal > 0) {
@@ -763,15 +763,14 @@ class _RepProfileState extends State<RepProfile> {
               a['date'].toString().substring(0, 7)) {
             var total = 0.0;
             var discountedTotal = 0.0;
-            QuerySnapshot totalSnap = await _firestore
-                .collection("order_items")
-                .where('order_id', isEqualTo: a.reference.id)
-                .get();
             for (int i = 0; i < totalSnap.docs.length; i++) {
               var doc = totalSnap.docs[i];
-              total += doc['price'] * doc['quantity'];
-              discountedTotal += (doc['price'] * doc['quantity']) -
-                  ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+              if (doc['order_id'] == a.reference.id) {
+                total += doc['price'] * doc['quantity'];
+                discountedTotal += (doc['price'] * doc['quantity']) -
+                    ((doc['discount'] / 100) *
+                        (doc['price'] * doc['quantity']));
+              }
             }
             int weekDay = date.weekday;
             DateTime startWeek = date.subtract(Duration(days: weekDay));

@@ -3,7 +3,6 @@ import 'package:dk_brothers/components/decorations.dart';
 import 'package:dk_brothers/screens/login_screen.dart';
 import 'package:dk_brothers/screens/rep_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dk_brothers/screens/cheque_diary.dart';
 import 'package:dk_brothers/screens/sales_rep_screen.dart';

@@ -183,6 +183,7 @@ class GetEventsForDay extends StatelessWidget {
           .collection('orders')
           .where('shop_name', isGreaterThanOrEqualTo: searchText)
           .where('shop_name', isLessThan: searchText + 'z')
+          .orderBy('shop_name', descending: false)
           .snapshots();
       yield* _search;
     }
@@ -192,6 +193,7 @@ class GetEventsForDay extends StatelessWidget {
           .collection('orders')
           .where('shop_name', isGreaterThanOrEqualTo: searchText)
           .where('shop_name', isLessThan: searchText + 'z')
+          .orderBy('shop_name', descending: false)
           .snapshots();
       yield* _search;
     }
@@ -200,12 +202,17 @@ class GetEventsForDay extends StatelessWidget {
       var _search1 = firestore
           .collection('orders')
           .where('date', isEqualTo: selectedDate.toString().substring(0, 10))
+          .orderBy('time', descending: false)
           .snapshots();
       yield* _search1;
     }
 
     if (searchText == "" && selectedDate == null) {
-      var _search2 = firestore.collection('orders').snapshots();
+      var _search2 = firestore
+          .collection('orders')
+          .orderBy('date', descending: false)
+          .orderBy('time', descending: false)
+          .snapshots();
       yield* _search2;
     }
   }
@@ -227,6 +234,7 @@ class GetEventsForDay extends StatelessWidget {
         for (var item in orders) {
           final orderDate = item['date'];
           final payment = item['payment'];
+          final payment_total = item['payment_total'];
           final paymentMethod = item['payment_method'];
           final shopId = item['shop_id'];
           final shopName = item['shop_name'];
@@ -242,6 +250,7 @@ class GetEventsForDay extends StatelessWidget {
               orderList.add(repListBuilder(
                 orderDate,
                 payment.toString(),
+                payment_total.toString(),
                 context,
                 paymentMethod.toString(),
                 shopId,
@@ -259,6 +268,7 @@ class GetEventsForDay extends StatelessWidget {
               orderList.add(repListBuilder1(
                 orderDate,
                 payment.toString(),
+                payment_total.toString(),
                 context,
                 paymentMethod.toString(),
                 shopId,
@@ -279,6 +289,7 @@ class GetEventsForDay extends StatelessWidget {
               orderList.add(repListBuilder2(
                 orderDate,
                 payment.toString(),
+                payment_total.toString(),
                 context,
                 paymentMethod.toString(),
                 shopId,
@@ -297,6 +308,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -314,6 +326,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder1(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -334,6 +347,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder2(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -371,6 +385,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -398,6 +413,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,
@@ -478,6 +494,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder1(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -508,6 +525,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,
@@ -591,6 +609,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder2(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -617,6 +636,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,

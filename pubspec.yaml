@@ -30,9 +30,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   device_preview: ^0.7.4
   font_awesome_flutter: ^9.1.0
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.1.0
-  cloud_firestore: ^2.5.1
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.6
+  cloud_firestore: ^3.1.7
   modal_progress_hud_alt: ^1.0.0
   top_snackbar_flutter: ^1.0.0
   persistent_bottom_nav_bar: ^4.0.2
@@ -48,7 +48,7 @@ dependencies:
   fluttertoast: ^8.0.8
   bluetooth_print: ^3.0.1
   location: ^4.3.0
-  blue_thermal_printer: ^1.1.8
+  blue_thermal_printer: ^1.2.0
   flutter_calendar_carousel: ^2.0.3
   flutter_barcode_scanner: ^2.0.0
   fl_chart: ^0.40.2

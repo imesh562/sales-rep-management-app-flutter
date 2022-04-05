@@ -68,6 +68,7 @@ class GetEventsForDay extends StatelessWidget {
         for (var item in orders) {
           final orderDate = item['date'];
           final payment = item['payment'];
+          final payment_total = item['payment_total'];
           final paymentMethod = item['payment_method'];
           final shopId = item['shop_id'];
           final shopName = item['shop_name'];
@@ -83,6 +84,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -100,6 +102,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder1(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -120,6 +123,7 @@ class GetEventsForDay extends StatelessWidget {
                 orderList.add(repListBuilder2(
                   orderDate,
                   payment.toString(),
+                  payment_total.toString(),
                   context,
                   paymentMethod.toString(),
                   shopId,
@@ -170,6 +174,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -197,6 +202,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,
@@ -277,6 +283,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder1(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -307,6 +314,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,
@@ -390,6 +398,7 @@ class GetEventsForDay extends StatelessWidget {
   Widget repListBuilder2(
     orderDate,
     String payment,
+    String payment_total,
     BuildContext context,
     String paymentMethod,
     shopId,
@@ -416,6 +425,7 @@ class GetEventsForDay extends StatelessWidget {
             orderDate,
             time,
             payment,
+            payment_total,
             paymentMethod,
             orderID,
             discount,

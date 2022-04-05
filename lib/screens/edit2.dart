@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dk_brothers/components/components.dart';
 import 'package:dk_brothers/components/decorations.dart';
@@ -9,7 +7,6 @@ import 'package:dk_brothers/screens/order_screen.dart';
 import 'package:dk_brothers/screens/print_screen.dart';
 import 'package:dropdown_plus/dropdown_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -95,8 +92,6 @@ class _Edit2State extends State<Edit2> {
   GlobalKey<FormState> _discountKey = GlobalKey();
 
   TextEditingController paymentController = TextEditingController();
-
-  BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
 
   late String shopName;
   late String telNum;
@@ -1406,7 +1401,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
           });
 
@@ -1416,7 +1412,8 @@ class _Edit2State extends State<Edit2> {
               .update({
             'shop_id': selectedID,
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
           });
         } catch (e) {
@@ -1435,7 +1432,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'cheque_num': chequeNum,
             'bank': bankName,
@@ -1449,7 +1447,8 @@ class _Edit2State extends State<Edit2> {
               .update({
             'shop_id': selectedID,
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'cheque_num': chequeNum,
             'bank': bankName,
@@ -1478,7 +1477,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'payment_id': FieldValue.delete(),
           });
@@ -1501,7 +1501,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'bank': FieldValue.delete(),
             'cheque_num': FieldValue.delete(),
@@ -1515,7 +1516,8 @@ class _Edit2State extends State<Edit2> {
               .update({
             'shop_id': selectedID,
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'bank': FieldValue.delete(),
             'cheque_num': FieldValue.delete(),
@@ -1537,7 +1539,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'cheque_num': chequeNum,
             'bank': bankName,
@@ -1550,7 +1553,8 @@ class _Edit2State extends State<Edit2> {
               .update({
             'shop_id': selectedID,
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'cheque_num': chequeNum,
             'bank': bankName,
@@ -1579,7 +1583,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'payment_id': FieldValue.delete(),
             'bank': FieldValue.delete(),
@@ -1611,7 +1616,8 @@ class _Edit2State extends State<Edit2> {
             'date': date.toString(),
             'time': time.toString(),
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'rep_name': repName,
             'rep_id': repID,
@@ -1632,7 +1638,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'payment_id': paymentId,
           });
@@ -1657,7 +1664,8 @@ class _Edit2State extends State<Edit2> {
             'date': date.toString(),
             'time': time.toString(),
             'shop_name': selectedName,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'rep_name': repName,
             'rep_id': repID,
@@ -1682,7 +1690,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
             'payment_id': paymentId,
             'cheque_num': chequeNum,
@@ -1705,7 +1714,8 @@ class _Edit2State extends State<Edit2> {
             'shop_id': selectedID,
             'shop_name': selectedName,
             'discount': discount,
-            'payment': amount,
+            'payment': total > amount ? amount : total,
+            'payment_total': amount,
             'payment_method': paymentMethod,
           });
         } catch (e) {

@@ -30,6 +30,8 @@ class _AllRepsState extends State<AllReps> {
   bool closeTopContainers = false;
   int orderBy = 1;
   var orderByText = 'Name';
+  late DateTime now;
+  late DateTime today;
 
   @override
   void initState() {
@@ -45,6 +47,8 @@ class _AllRepsState extends State<AllReps> {
           closeTopContainers = controller.offset > 10;
         });
     });
+    now = DateTime.now();
+    today = DateTime(now.year, now.month, now.day);
     getUserRole();
   }
 
@@ -169,7 +173,12 @@ class _AllRepsState extends State<AllReps> {
                 ),
               ],
             ),
-            RepsStream(controller, searchText, orderByText),
+            RepsStream(
+              controller,
+              searchText,
+              orderByText,
+              today.toString().substring(0, 10),
+            ),
             SizedBox(
               height: mediaData.size.height * 0.015,
             ),
@@ -195,7 +204,8 @@ class RepsStream extends StatelessWidget {
   var controller;
   String searchText;
   String orderByText;
-  RepsStream(this.controller, this.searchText, this.orderByText);
+  String today;
+  RepsStream(this.controller, this.searchText, this.orderByText, this.today);
   @override
   Widget build(BuildContext context) {
     final mediaData = MediaQuery.of(context);
@@ -244,10 +254,23 @@ class RepsStream extends StatelessWidget {
           final repname = rep['name'];
           final repStatus = rep['status'];
           final repRole = rep['role'];
+          final imgURL = rep['img_url'];
+          final lastAssign = rep['last_assign'];
           final repID = rep.reference.id;
 
-          repList.add(repListBuilder(repname, repEmail, repMobile, mediaData,
-              context, repStatus, repID, repRole));
+          repList.add(repListBuilder(
+              repname,
+              repEmail,
+              repMobile,
+              mediaData,
+              context,
+              repStatus,
+              repID,
+              repRole,
+              imgURL,
+              lastAssign,
+              today,
+              repEmail));
         }
         return Expanded(
           child: Container(
@@ -270,6 +293,39 @@ class RepsStream extends StatelessWidget {
   }
 }
 
+Widget buildImage(MediaQueryData mediaData, imagePath) {
+  if (imagePath.isNotEmpty && imagePath != 'null') {
+    final image = NetworkImage(imagePath);
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: Ink.image(
+          image: image,
+          fit: BoxFit.cover,
+          width: mediaData.size.height * 0.14,
+          height: mediaData.size.height * 0.14,
+          colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.8), BlendMode.dstATop),
+        ),
+      ),
+    );
+  } else {
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: Ink.image(
+          image: AssetImage('assets/images/saleREP.png'),
+          fit: BoxFit.cover,
+          width: mediaData.size.height * 0.15,
+          height: mediaData.size.height * 0.15,
+          colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.4), BlendMode.dstATop),
+        ),
+      ),
+    );
+  }
+}
+
 Widget repListBuilder(
   String name,
   String email,
@@ -279,6 +335,10 @@ Widget repListBuilder(
   String repStatus,
   String repID,
   String repRole,
+  String imgURL,
+  String lastAssign,
+  String today,
+  String eMail,
 ) {
   return GestureDetector(
     onTap: () {
@@ -300,68 +360,90 @@ Widget repListBuilder(
         boxShadow: boxShadowsReps(),
         borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
-        image: DecorationImage(
-          image: AssetImage('assets/images/saleREP.png'),
-          alignment: Alignment.topRight,
-          colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.45), BlendMode.dstATop),
-        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Align(
+            alignment: Alignment.centerRight,
+            child: buildImage(mediaData, imgURL),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 14.0),
+                padding: repRole == 'admin'
+                    ? EdgeInsets.only(top: 5.0, left: 14.0)
+                    : EdgeInsets.only(top: 8.0, left: 14.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: mediaData.size.height * 0.034,
+                        fontFamily: 'Exo2',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (repRole != 'admin')
+                      repStatus == 'enable'
+                          ? Icon(
+                              Icons.play_circle,
+                              color: Color(0xFF79CCCA),
+                            )
+                          : Icon(
+                              Icons.pause_circle,
+                              color: Colors.red,
+                            ),
+                  ],
+                ),
+              ),
+              if (repRole == 'admin')
+                Padding(
+                  padding: const EdgeInsets.only(left: 14.0),
+                  child: Text(
+                    '(Admin)',
+                    style: TextStyle(
+                      fontSize: mediaData.size.height * 0.0225,
+                      fontFamily: 'Exo2',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 2.0, left: 14.0),
                 child: Text(
-                  name,
+                  eMail,
                   style: TextStyle(
-                    fontSize: mediaData.size.height * 0.034,
+                    fontSize: mediaData.size.height * 0.02,
                     fontFamily: 'Exo2',
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              repStatus == 'enable'
-                  ? Icon(
-                      Icons.play_circle,
-                      color: Color(0xFF04DBDD),
-                    )
-                  : Icon(
-                      Icons.pause_circle,
-                      color: Colors.red,
-                    ),
-              Text(
-                repRole == 'admin' ? ' (Admin)' : '',
-                style: TextStyle(
-                  fontSize: mediaData.size.height * 0.025,
-                  fontFamily: 'Exo2',
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(left: 14.0),
+                child: Text(
+                  telNumber,
+                  style: TextStyle(
+                    fontSize: mediaData.size.height * 0.02,
+                    fontFamily: 'Exo2',
+                  ),
                 ),
               ),
+              lastAssign == today && repRole == 'rep'
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 14.0),
+                      child: Text(
+                        'Assigned',
+                        style: TextStyle(
+                          fontSize: mediaData.size.height * 0.022,
+                          fontFamily: 'Exo2',
+                          color: Color(0xFF79CCCA),
+                        ),
+                      ),
+                    )
+                  : Text(''),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 2.0, left: 14.0),
-            child: Text(
-              email,
-              style: TextStyle(
-                fontSize: mediaData.size.height * 0.02,
-                fontFamily: 'Exo2',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: Text(
-              telNumber,
-              style: TextStyle(
-                fontSize: mediaData.size.height * 0.02,
-                fontFamily: 'Exo2',
-              ),
-            ),
           ),
         ],
       ),

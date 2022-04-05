@@ -51,6 +51,10 @@ class _ViewPaymentState extends State<ViewPayment> {
   var chequeStatus = 'pending';
   var userRole;
   var repID;
+  double total = 0;
+  double discountedTotal = 0;
+  double finalTotal = 0;
+  var payment_total;
 
   bool showEdit = true;
 
@@ -74,6 +78,11 @@ class _ViewPaymentState extends State<ViewPayment> {
     wordList = repName.split(" ");
     repNameShort = wordList[0];
     await getUserRole();
+    await getorderData();
+    if (this.mounted)
+      setState(() {
+        finalTotal = getTotal();
+      });
   }
 
   getPaymentData() async {
@@ -91,6 +100,7 @@ class _ViewPaymentState extends State<ViewPayment> {
           repName = result.get('rep_name');
           date = result.get('date');
           payment = result.get('payment');
+          payment_total = result.get('payment_total');
           paymentMethod = result.get('payment_method');
           shopID = result.get('shop_id');
           shopName = result.get('shop_name');
@@ -167,6 +177,38 @@ class _ViewPaymentState extends State<ViewPayment> {
   void dispose() {
     subscription.cancel();
     super.dispose();
+  }
+
+  getorderData() async {
+    if (this.mounted)
+      setState(() {
+        showSpinner = true;
+      });
+    QuerySnapshot querySnapshot = await _firestore
+        .collection("order_items")
+        .where('order_id', isEqualTo: orderID.toString())
+        .get();
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      var a = querySnapshot.docs[i];
+      if (this.mounted)
+        setState(() {
+          total += a['price'] * a['quantity'];
+          discountedTotal += (a['price'] * a['quantity']) -
+              ((a['discount'] / 100) * (a['price'] * a['quantity']));
+        });
+    }
+    if (this.mounted)
+      setState(() {
+        showSpinner = false;
+      });
+  }
+
+  getTotal() {
+    if (discountedTotal < total && discountedTotal > 0) {
+      return discountedTotal;
+    } else {
+      return total;
+    }
   }
 
   @override
@@ -647,6 +689,8 @@ class _ViewPaymentState extends State<ViewPayment> {
                       widget.paymentID,
                       widget.userRoleDash,
                       repID,
+                      finalTotal,
+                      payment_total,
                     )
                   : EditPayment.cheque(
                       showEdit,
@@ -662,6 +706,8 @@ class _ViewPaymentState extends State<ViewPayment> {
                       widget.paymentID,
                       widget.userRoleDash,
                       repID,
+                      finalTotal,
+                      payment_total,
                     ),
               if ((loggedInUser1!.uid.toString() == repID.toString()) ||
                   userRole.toString() == 'admin')

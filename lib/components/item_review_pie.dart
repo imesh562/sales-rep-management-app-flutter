@@ -16,21 +16,21 @@ class RepOverviewData {
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+    QuerySnapshot totalSnap = await _firestore.collection("order_items").get();
     if (querySnapshot.docs.length > 0) {
       for (int i = 0; i < querySnapshot.docs.length; i++) {
         var a = querySnapshot.docs[i];
-        QuerySnapshot totalSnap = await _firestore
-            .collection("order_items")
-            .where('order_id', isEqualTo: a.reference.id)
-            .get();
+
         for (int i = 0; i < totalSnap.docs.length; i++) {
           var doc = totalSnap.docs[i];
-          var itemID = doc['item_id'];
-          var quantity = doc['quantity'];
-          if (items.containsKey(itemID)) {
-            items.update(itemID, (dynamic val) => val + quantity);
-          } else {
-            items[itemID] = quantity;
+          if (doc['order_id'] == a.reference.id) {
+            var itemID = doc['item_id'];
+            var quantity = doc['quantity'];
+            if (items.containsKey(itemID)) {
+              items.update(itemID, (dynamic val) => val + quantity);
+            } else {
+              items[itemID] = quantity;
+            }
           }
         }
       }
@@ -40,9 +40,13 @@ class RepOverviewData {
   }
 
   getItemNames() async {
+    QuerySnapshot repData = await _firestore.collection("items").get();
+
     for (var key in items.keys) {
-      await _firestore.collection("items").doc(key).get().then((result) {
-        repNames.add(result.get('name'));
+      repData.docs.forEach((element) {
+        if (element.id == key) {
+          repNames.add(element.get('name'));
+        }
       });
     }
   }

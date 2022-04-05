@@ -16,21 +16,23 @@ class RepOverviewData {
         .collection("orders")
         .where('status', isEqualTo: 'enable')
         .get();
+
+    QuerySnapshot totalSnap = await _firestore.collection("order_items").get();
+
     if (querySnapshot.docs.length > 0) {
       for (int i = 0; i < querySnapshot.docs.length; i++) {
         var a = querySnapshot.docs[i];
         var repID = a['rep_id'];
         var total = 0.0;
         var discountedTotal = 0.0;
-        QuerySnapshot totalSnap = await _firestore
-            .collection("order_items")
-            .where('order_id', isEqualTo: a.reference.id)
-            .get();
+
         for (int i = 0; i < totalSnap.docs.length; i++) {
           var doc = totalSnap.docs[i];
-          total += doc['price'] * doc['quantity'];
-          discountedTotal += (doc['price'] * doc['quantity']) -
-              ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+          if (doc['order_id'] == a.reference.id) {
+            total += doc['price'] * doc['quantity'];
+            discountedTotal += (doc['price'] * doc['quantity']) -
+                ((doc['discount'] / 100) * (doc['price'] * doc['quantity']));
+          }
         }
         if (repAnalysis.containsKey(repID)) {
           if (discountedTotal < total && discountedTotal > 0) {
@@ -46,15 +48,22 @@ class RepOverviewData {
           }
         }
       }
+      repAnalysis.removeWhere((key, value) => value == 0);
       var values = repAnalysis.values;
-      total = values.reduce((sum, element) => sum + element);
+      if (repAnalysis.isNotEmpty) {
+        total = values.reduce((sum, element) => sum + element);
+      }
     }
   }
 
   getRepNames() async {
+    QuerySnapshot repData = await _firestore.collection("users").get();
+
     for (var key in repAnalysis.keys) {
-      await _firestore.collection("users").doc(key).get().then((result) {
-        repNames.add(result.get('name'));
+      repData.docs.forEach((element) {
+        if (element.id == key) {
+          repNames.add(element.get('name'));
+        }
       });
     }
   }
