@@ -5,7 +5,7 @@
 ### Developed an admin panel to provide Data visualization and system security features to admin users with different access levels.
 
 ## IMPORTANT
-### Step 01 - To use the app please add the firebase configuration file (google-services.json) to android/app folder.
+### - To use the app please add the firebase configuration file (google-services.json) to android/app folder.
 
 ## Screenshots.
 
