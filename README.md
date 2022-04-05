@@ -1,6 +1,10 @@
 # Sales Rep and Sales Management app.
 
 ### This mobile app is used to manage daily activities of a wholesale business.
+### This mobile application also includes functionalities such as customers management, Billing via a Bluetooth printer,and analysis of the business.
+### Developed an admin panel to provide Data visualization and system security features to admin users with different access levels.
+
+## Screenshots.
 
 ## Getting Started
 
