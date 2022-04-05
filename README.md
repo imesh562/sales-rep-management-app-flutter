@@ -8,7 +8,7 @@
 
 ## Screenshots.
 
-![alt text](https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/Screenshot (2).png?raw=true)
+![alt text](https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/Screenshot(2).png?raw=true)
 
 ## Getting Started
 
