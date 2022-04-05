@@ -16,8 +16,17 @@
 ### Admin Main Menu.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(6).png" width="250" height="500">
 
-### Sales Representive Main Menu.
+### Sales Rep Main Menu.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(7).png" width="250" height="500">
+
+### Sales Rep screen.
+<img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(3).png" width="250" height="500">
+
+### Sales Rep options.
+<img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(4).png" width="250" height="500">
+
+### Sales Rep profile.
+<img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(1).png" width="250" height="500">
 
 ## Getting Started
 
