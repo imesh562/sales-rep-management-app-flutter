@@ -6,6 +6,7 @@
 
 ## IMPORTANT
 ### - To use the app please add the firebase configuration file (google-services.json) to android/app folder.
+### - Email me for the DB structure.
 
 ## Screenshots.
 
