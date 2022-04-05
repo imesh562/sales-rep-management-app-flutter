@@ -8,8 +8,11 @@
 
 ## Screenshots.
 
+### Login screen.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(2).png" width="250" height="500">
+### Admin Main Menu.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(6).png" width="250" height="500">
+### Sales Representive Main Menu.
 <img src="https://github.com/imesh562/sales-rep-management-app-flutter/blob/main/ss/Screenshot(7).png" width="250" height="500">
 
 ## Getting Started
