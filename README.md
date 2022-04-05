@@ -8,7 +8,7 @@
 
 ## Screenshots.
 
-![Alt text](/ss/Screenshot (2).png "Login Screen")
+![My Image](/ss/Screenshot (2).png)
 
 ## Getting Started
 
