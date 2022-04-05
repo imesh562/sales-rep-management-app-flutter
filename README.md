@@ -4,6 +4,8 @@
 ### This mobile application also includes functionalities such as customers management, Billing via a Bluetooth printer,and analysis of the business.
 ### Developed an admin panel to provide Data visualization and system security features to admin users with different access levels.
 
+##IMPORTANT - To use the app please add the firebase configuration file (google-services.json) to android/app folder.
+
 ## Screenshots.
 
 ## Getting Started
