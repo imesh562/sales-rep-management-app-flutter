@@ -8,7 +8,7 @@
 
 ## Screenshots.
 
-![My Image](/ss/Screenshot (2).png)
+![My Image](ss/Screenshot (2).png)
 
 ## Getting Started
 
